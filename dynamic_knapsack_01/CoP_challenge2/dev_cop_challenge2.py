@@ -95,14 +95,12 @@ def maxVal(toConsider, avail):
 		highest = 0
 		food = sortedFoodList[j-1]
 		for i in range(1,avail+1):
-			# Negative index case. Hence use value from above row
+			# Negative index case, hence use value from above row
 			if (i-food.getCost() < 0):
-				highest = valueMatrix[j-1,i]
-				valueMatrix[j,i] = highest
+				valueMatrix[j,i] = valueMatrix[j-1,i]
 			# Case where we check both values for maximum
 			else:
-				highest = max(valueMatrix[j-1,i], valueMatrix[j-1,i-food.getCost()] + food.getValue())
-				valueMatrix[j,i] = highest
+				valueMatrix[j,i] = max(valueMatrix[j-1,i], valueMatrix[j-1,i-food.getCost()] + food.getValue())
 
 	# Start tracing sequence of decisions
 	highestValue = valueMatrix[-1][-1]
