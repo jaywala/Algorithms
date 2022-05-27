@@ -87,13 +87,18 @@ def maxVal(toConsider, avail):
 	# print(f"{used = }")
 	# print(f"{value = }")
 
-	sortedFoodList = sorted(toConsider, key=lambda x: x.getCost(), reverse=False)
-	# Dynamic Prgrammic storage: Value Matrix is n foods by calaorie capacity
-	valueMatrix = np.zeros((len(sortedFoodList)+1,avail+1),dtype=int)
+	# print('toConsider')
+	# for food in toConsider:
+	# 	print(food)
 
-	for j in range(1,len(sortedFoodList)+1):
+
+	# sortedFoodList = sorted(toConsider, key=lambda x: x.getCost(), reverse=False)
+	# Dynamic Prgrammic storage: Value Matrix is n foods by calaorie capacity
+	valueMatrix = np.zeros((len(toConsider)+1,avail+1),dtype=int)
+
+	for j in range(1,len(toConsider)+1):
 		highest = 0
-		food = sortedFoodList[j-1]
+		food = toConsider[j-1]
 		for i in range(1,avail+1):
 			# Negative index case, hence use value from above row
 			if (i-food.getCost() < 0):
@@ -104,13 +109,13 @@ def maxVal(toConsider, avail):
 
 	# Start tracing sequence of decisions
 	highestValue = valueMatrix[-1][-1]
-	j = len(sortedFoodList)
+	j = len(toConsider)
 	i = avail
 	DPfoodList = []
 	while j != 0:
 		if valueMatrix[j][i] != valueMatrix[j-1][i]:
-			DPfoodList.append(sortedFoodList[j-1])
-			i -= sortedFoodList[j-1].getCost()
+			DPfoodList.append(toConsider[j-1])
+			i -= toConsider[j-1].getCost()
 		j -= 1
 
 	# Test tracing sequence of steps is correct
